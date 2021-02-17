@@ -1,4 +1,4 @@
-; autolock.ahk by github:hoffersrc / reddit:Splongus
+; autolock.ahk by github:hoffr / reddit:Splongus
 ; Purpose: Lock workstation after %minutestoidle% (default 5 minutes) and mute audio
 ; Gives 10 second warning before lock, cancellable by using mouse or keyboard
 
