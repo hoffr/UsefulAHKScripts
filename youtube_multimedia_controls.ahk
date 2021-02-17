@@ -1,5 +1,5 @@
 ; -------------
-; youtube_multimedia_controls.ahk by github:hoffersrc / reddit:Splongus
+; youtube_multimedia_controls.ahk by github:hoffr / reddit:Splongus
 ; Purpose: Quickly pause/resume YouTube from any window or browser tab without disrupting too much of your experience.
 ; To pause/resume YouTube, hold your keyboard's media play/pause button for 1/3 of a second.
 ; ---
