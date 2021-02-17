@@ -1,5 +1,7 @@
 ; steam_auto_maximize.ahk by github:hoffr / reddit:Splongus
 ; Purpose: Auto-maximize Steam user interface, so whenever I use its scrollbar it doesn't just try to annoyingly resize the window
+; This is designed to not auto-maximize the window if the user has intentionally windowed it, aka to be as unintrustive as possible.
+; eg. User launches Steam and once the main library window pops up it is maximized. User or a low-res game de-maximizes/resizes the window, but this script does nothing until Steam is restarted.
 
 loop {
 	Process,Exist,% "steam.exe"
