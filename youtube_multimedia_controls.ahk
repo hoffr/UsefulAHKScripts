@@ -1,19 +1,23 @@
 ; -------------
-; youtube_multimedia_controls.ahk by github:hoffr / reddit:Splongus
+; youtube_multimedia_controls.ahk by github:hoffersrc / reddit:Splongus
 ; Purpose: Quickly pause/resume YouTube from any window or browser tab without disrupting too much of your experience.
 ; To pause/resume YouTube, hold your keyboard's media play/pause button for 1/3 of a second.
 ; ---
 ; Limitations:
 ; 1. Traditional media pause/resume will now be on-release instead of on-press.
-; 2. Only the first YouTube tab the script detects will be paused/resumed. To detect a YouTube tab, the script traverses tabs from left-right
-;    starting with the active tab, and wraps around until it reaches the tab it started on unless it finds a YouTube tab before then.
+; 2. Only the first YouTube video tab the script detects will be paused/resumed.
+;    To detect a YouTube video tab, the script traverses tabs from left-right
+;    starting with the active tab, and wraps around until it reaches the tab
+;    it started on unless it finds a YouTube video tab before then.
+; 3. If multiple main browser windows are open and none have a YouTube video tab focused,
+;    the script will use the latest opened window.
 
 
 ; -------------
 ; EZ VARIABLES:
 
 ; known to be compatible with firefox & chrome
-browsername := "firefox.exe"
+browserExe := "firefox.exe"
 
 ; time in ms to wait for browser to be 'usable' upon initial failure
 ; raise this by increments of 500 if youtube doesn't play/pause properly when alt-tabbing from a fullscreen app
@@ -82,19 +86,38 @@ MediaAction(button) {
 	
 	SetTitleMatchMode,2
 	
-	if (!WinExist("ahk_exe" browsername)) {
+	if (!WinExist("ahk_exe" browserExe)) {
 		return
 	}
 	
 	prevhwnd := ""
-	if (!WinActive("ahk_exe" browsername)) {
+	if (!WinActive("ahk_exe" browserExe) || WinActive("Picture-in-Picture")) { ; find main window even if PiP is focused
 		WinGet,prevhwnd,id,A
-		WinActivate,% "ahk_exe" browsername
-		WinWaitActive,% "ahk_exe" browsername,,3
-		if (ErrorLevel) {
-			return ; somefins wrong
+		
+		usableHwnd := ""
+		WinGet,browserHwnd,list,% "ahk_exe" browserExe
+		while (browserHwnd%A_Index%) {
+			wingettitle,browserTitle,% "ahk_id" browserHwnd%A_Index%
+			if (browserTitle != "Picture-in-Picture") { ; skip firefox's pop out video player
+				if (InStr(browserTitle,"- YouTube")) { ; prefer window with active youtube tab if multiple browser windows exist
+					usableHwnd := browserHwnd%A_Index%
+					break
+				}
+				usableHwnd := browserHwnd%A_Index% ; use whatever qualifying window we found last
+			}
+		}
+		
+		if (usableHwnd) {
+			WinActivate,% "ahk_id" usableHwnd
+			WinWaitActive,% "ahk_id" usableHwnd,,3
+			if (ErrorLevel) {
+				return ; somefins wrong
+			}
+		} else {
+			return ; i guess PiP was the only window? lol
 		}
 	}
+	
 	
 	tab2 := tab1 := "ERROR_UNSET"
 	tabCycles := noYouTube := tab1match := 0
