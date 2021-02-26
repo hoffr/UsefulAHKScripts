@@ -1,8 +1,8 @@
 ; youtube_letterbox_pause_reenabler.ahk by github:hoffr / reddit:Splongus
 ; -------------------------------------
 ; Sometimes it's the little things in life... that piss me off!
-; YouTube recently removed the ability to pause a video by clicking the black letterboxed space around it.
-; I don't know javascript, so here's this atrocity of a workaround.
+; YouTube (EDIT: It's a Firefox bug!) recently removed the ability to pause a video by clicking the black letterboxed space around it.
+; I don't know javascript, so here's this atrocity of a workaround (edit: until the bug is fixed)
 ; ---
 ; Limitations:
 ; THIS MUST BE RUN AS ADMIN if you want your left click to work at all while an admin window is active. For real.
@@ -14,7 +14,7 @@
 
 ; ALL OF THESE VALUES MUST BE CHANGED FOR SCRIPT TO WORK; USE WINDOW SPY TO GET PROPER VALUES:
 
-browserExe := "firefox.exe" ; should work fine with chrome
+browserExe := "firefox.exe" ; should work fine with chrome (edit: firefox-only bug)
 
 ; Define the bounding rectangle of your YouTube video when the page is scrolled all the way up.
 ; REMINDER: These must be fullscreen coords. Script won't work if browser is windowed.
