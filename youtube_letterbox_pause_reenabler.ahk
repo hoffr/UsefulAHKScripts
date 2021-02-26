@@ -4,7 +4,9 @@
 ; YouTube recently removed the ability to pause a video by clicking the black letterboxed space around it.
 ; I don't know javascript, so here's this atrocity of a workaround.
 ; ---
-; Limitations: It only works if the browser is maximized and the page is scrolled all the way up.
+; Limitations:
+; THIS MUST BE RUN AS ADMIN if you want your left click to work at all while an admin window is active. For real.
+; It only works if the browser is maximized and the page is scrolled all the way up.
 ; If it's not the active window but it's still visible, then if you click on the letterbox space
 ; it should work unless the scrollbar is blocked by another window.
 ; -------------------------------------
