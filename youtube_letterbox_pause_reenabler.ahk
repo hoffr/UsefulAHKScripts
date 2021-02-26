@@ -2,9 +2,11 @@
 ; -------------------------------------
 ; Sometimes it's the little things in life... that piss me off!
 ; YouTube recently removed the ability to pause a video by clicking the black letterboxed space around it.
-; This is a flimsy yet serviceable workaround. Yes it's absolutely ridiculous.
+; I don't know javascript, so here's this atrocity of a workaround.
 ; ---
 ; Limitations: It only works if the browser is maximized and the page is scrolled all the way up.
+; If it's not the active window but it's still visible, then if you click on the letterbox space
+; it should work unless the scrollbar is blocked by another window.
 ; -------------------------------------
 
 
@@ -29,8 +31,10 @@ x_max := 2532    ; farthest right x coord (watch out for that scrollbar!)
 x_sb := 2546
 y_sb := 178
 
-; scrollbar background color (Win7 might have gradients, in which case UR SCREWED)
-sb_bg_color := "0xF0F0F0"
+; scrollbar color (Win7/vista/xp might have gradients, in which case UR SCREWED)
+sb_bar_color_hover := "0xA6A6A6" ; mouse hovering over scrollbar ("0x" MUST precede the color code)
+sb_bar_color_nohover := "0xCDCDCD"	; if your "hover" color is "0xA6A6A6" then don't mess with this "nohover" one
+									; otherwise you'll have to screenshot it & put it in a paint program and get its color that way
 
 ; ---
 
@@ -43,11 +47,13 @@ CoordMode,Pixel,Screen
 		MouseGetPos,x_mouse,y_mouse,hwnd
 		PixelGetColor,colormouse,x_mouse,y_mouse,RGB	; mouse, in case there are player controls over actual video
 		PixelGetColor,colorsb,x_sb,y_sb,RGB				; scrollbar
+		msgbox,% colorsb
+		exitapp
 		
 		if (WinExist(" - YouTube")
 		&& (WinExist("ahk_class MozillaWindowClass ahk_id " hwnd)	; if mouse is over browser window (firefox edition)
 		|| WinExist("ahk_class Chrome_WidgetWin_1 ahk_id " hwnd))	; chrome edition
-		&& colorsb != sb_bg_color									; if scrollbar is at very top
+		&& colorsb = sb_bar_color_nohover							; if we're sure scrollbar is at very top
 		&& x_mouse <= x_max && x_mouse >= x_min						; if mouse is within our defined bounding rectangle
 		&& y_mouse <= y_max && y_mouse >= y_min
 		&& colormouse = "0x000000") {								; if mouse is likely over letterboxing
