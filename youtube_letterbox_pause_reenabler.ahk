@@ -47,8 +47,6 @@ CoordMode,Pixel,Screen
 		MouseGetPos,x_mouse,y_mouse,hwnd
 		PixelGetColor,colormouse,x_mouse,y_mouse,RGB	; mouse, in case there are player controls over actual video
 		PixelGetColor,colorsb,x_sb,y_sb,RGB				; scrollbar
-		msgbox,% colorsb
-		exitapp
 		
 		if (WinExist(" - YouTube")
 		&& (WinExist("ahk_class MozillaWindowClass ahk_id " hwnd)	; if mouse is over browser window (firefox edition)
