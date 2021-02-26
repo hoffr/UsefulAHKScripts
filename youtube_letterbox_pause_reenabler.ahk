@@ -17,8 +17,8 @@
 browserExe := "firefox.exe" ; should work fine with chrome (edit: firefox-only bug)
 
 ; Define the bounding rectangle of your YouTube video when the page is scrolled all the way up.
-; REMINDER: These must be fullscreen coords. Script won't work if browser is windowed.
-; Don't include youtube's video player control bar on the bottom!
+; REMINDER: These must be maximized-window coords. Script won't work if browser isn't maximized.
+; Don't include youtube's video player control bar (pause/play/volume/fullscreen buttons etc) in the bounds!
 
 ; hoffr's default values: 2560x1440 monitor, 138% DPI scaling, 120% page zoom on youtube in firefox.
 y_min := 246    ; highest (as in visibly higher, not the number itself) y coordinate to consider clicks within
