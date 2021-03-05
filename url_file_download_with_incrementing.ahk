@@ -8,7 +8,7 @@
 renameFile := True
 renameTo_NoExt := "the file's new name"
 fileURL := "https://www.autohotkey.com/download/ahk-install.exe"
-destinationFolder := USERPROFILE "\Downloads\" ; NOTE: must have final backslash. full paths are allowed
+destinationFolder := USERPROFILE . "\Downloads\" ; NOTE: must have final backslash. full paths are allowed
 
 ; ---
 
@@ -46,7 +46,7 @@ destinationFolder := USERPROFILE "\Downloads\" ; NOTE: must have final backslash
 		paren1 := " ("
 		paren2 := ")"
 		
-	} until (!FileExist(USERPROFILE "\Downloads\" fileNameFinal)   ||   ai:=A_Index = 999)
+	} until (!FileExist(destinationFolder fileNameFinal)   ||   ai:=A_Index = 999)
 	
 	if (ai) {
 		msgbox,% "error: file count too large, something's wrong"
