@@ -1,6 +1,7 @@
 ; url_file_download_with_incrementing.ahk by github:hoffr / reddit:Splongus
 ; Downloads a file from URL and if necessary increments its count, eg. "My File (1).txt" etc.
 ; ---
+; LIMITATIONS: Will not work for URLs that do not include a file extension.
 
 
 ; EZ VARIABLES:
