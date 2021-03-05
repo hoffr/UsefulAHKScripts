@@ -1,7 +1,8 @@
 ; -------------
 ; youtube_multimedia_controls.ahk by github:hoffersrc / reddit:Splongus
-; Purpose: Quickly pause/resume YouTube from any window or browser tab without disrupting too much of your experience.
-; To pause/resume YouTube, hold your keyboard's media play/pause button for 1/3 of a second.
+; Purpose: Quickly pause/play, next/prev, or rewind/fastforward YouTube from any window/browser tab without much disruption.
+; To pause/play or rewind/fastforward YouTube, hold your keyboard's media button between 0.33 and 1.2 sec (1/2 sec is easy to remember)
+; To skip backward/forward in a YouTube playlist, hold the "prev" or "next" media button for 1.2 seconds.
 ; ---
 ; Limitations:
 ; 1. Traditional media pause/resume will now be on-release instead of on-press.
@@ -11,6 +12,8 @@
 ;    it started on unless it finds a YouTube video tab before then.
 ; 3. If multiple main browser windows are open and none have a YouTube video tab focused,
 ;    the script will use the latest opened window.
+; 4. When skipping to the previous video in a playlist, the playhead must be at least 2% through the video,
+; or else it'll just rewind to the start of the video. For reference: ~5s for a 5min video, ~10s for 10min video, etc.
 
 
 ; -------------
@@ -66,16 +69,24 @@ MediaAction(button) {
 	mediaButtonIsDown := 1
 	
 	ts1 := A_TickCount
-	pauseYouTube := 0
+	pauseYouTube := nextPrevYouTube := 0
 	while (mediaButtonIsDown) {
-		if (A_TickCount - ts1 > 330) {
-			pauseYouTube := 1
-			break
+		if (A_TickCount - ts1 >= 330) {
+			if (A_TickCount - ts1 >= 1200 && button != "PlayPause") {
+				nextPrevYouTube := 1
+				break
+			}
+			if (A_TickCount - ts1 < 1200) {
+				pauseYouTube := 1
+				if (button = "PlayPause") {
+					break
+				}
+			}
 		}
 		sleep,1
 	}
 	
-	if (!pauseYouTube) {
+	if !(pauseYouTube || nextPrevYouTube) {
 		switch (button) {
 			case "PlayPause": Send,{Media_Play_Pause}
 			case "Next": Send,{Media_Next}
@@ -156,10 +167,23 @@ MediaAction(button) {
 	}
 	
 	if (!noYouTube) {
-		switch (button) {
-			case "PlayPause": Send,k
-			case "Next": Send,k{l 2}k ; user may be more distracted while in another window, so larger rewind
-			case "Prev": Send,k{j 2}k ; keeping it consistent ("k" before/after to avoid weird audio)
+		if (pauseYouTube) {
+			switch (button) {
+				case "PlayPause": Send,k
+				case "Next": Send,k{l 2}k ; user may be more distracted while in another window, so larger rewind
+				case "Prev": Send,k{j 2}k ; keeping it consistent ("k" before/after to avoid weird audio)
+			}
+		}
+		if (nextPrevYouTube) {
+			switch (button) {
+				case "Next": Send,+n
+				case "Prev":
+					; if the video playhead is at > ~2%, youtube will simply rewind to the start of the vid. therefore we +p twice
+					; user of this script should take note not to press this until the vid has played a little (~5s for a 5min video)
+					Send,+p
+					sleep,50
+					Send,+p
+			}
 		}
 	}
 	
@@ -167,5 +191,11 @@ MediaAction(button) {
 	if (prevhwnd) {
 		WinActivate,% "ahk_id" prevhwnd
 	}
+	
+	; avoid accidental double-presses on bad keyboard button
+	keywait,Media_Play_Pause
+	keywait,Media_Next
+	keywait,Media_Prev
+	sleep,150
 	
 }
