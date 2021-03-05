@@ -1,19 +1,19 @@
 ; -------------
 ; youtube_multimedia_controls.ahk by github:hoffersrc / reddit:Splongus
-; Purpose: Quickly pause/play, next/prev, or rewind/fastforward YouTube from any window/browser tab without much disruption.
-; To pause/play or rewind/fastforward YouTube, hold your keyboard's media button between 0.33 and 1.2 sec (1/2 sec is easy to remember)
+; Purpose: Quickly pause/play, next/prev, or rewind/fast-forward (10s) YouTube from any window/browser tab without much disruption.
+; To pause/play or rewind/fast-forward YouTube, hold your keyboard's media button between 0.33 and 1.2 sec (1/2 sec is easy to remember)
 ; To skip backward/forward in a YouTube playlist, hold the "prev" or "next" media button for 1.2 seconds.
 ; ---
 ; Limitations:
 ; 1. Traditional media pause/resume will now be on-release instead of on-press.
-; 2. Only the first YouTube video tab the script detects will be paused/resumed.
+; 2. Only the first YouTube video tab the script detects will be used:
 ;    To detect a YouTube video tab, the script traverses tabs from left-right
 ;    starting with the active tab, and wraps around until it reaches the tab
 ;    it started on unless it finds a YouTube video tab before then.
 ; 3. If multiple main browser windows are open and none have a YouTube video tab focused,
 ;    the script will use the latest opened window.
-; 4. When skipping to the previous video in a playlist, the playhead must be at least 2% through the video,
-; or else it'll just rewind to the start of the video. For reference: ~5s for a 5min video, ~10s for 10min video, etc.
+; 4. When skipping to the previous video in a playlist, the playhead must be at least ~2% through the video,
+;    or else it'll just rewind to the start of the video. For reference: ~5s for a 5min video, ~10s for 10min video, etc.
 
 
 ; -------------
