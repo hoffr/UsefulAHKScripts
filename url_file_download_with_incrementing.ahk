@@ -8,7 +8,7 @@
 renameFile := True
 renameTo_NoExt := "the file's new name"
 fileURL := "https://www.autohotkey.com/download/ahk-install.exe"
-dest := USERPROFILE "\Downloads\" ; NOTE: must have final backslash. full paths are allowed
+destinationFolder := USERPROFILE "\Downloads\" ; NOTE: must have final backslash. full paths are allowed
 
 ; ---
 
@@ -53,6 +53,6 @@ dest := USERPROFILE "\Downloads\" ; NOTE: must have final backslash. full paths 
 		exitapp
 	}
 	
-	UrlDownloadToFile,% fileURL,% dest fileNameFinal
+	UrlDownloadToFile,% fileURL,% destinationFolder fileNameFinal
 	
 return
