@@ -11,6 +11,8 @@
 setbatchlines,-1
 ; #Include %A_ScriptDir%\Lib\VA.ahk ; https://autohotkey.com/board/topic/21984-vista-audio-control-functions/
 
+OnMessage(0x7E, "WM_DISPLAYCHANGE")
+
 MeterLength := 30
 MeterLengthInclChan := MeterLength + 1 ; add 1 row for channel name L/R
 
@@ -90,6 +92,12 @@ UpdateGUI:
 	GuiControl,hwndLeft:Text,LText,%meterL%
 	GuiControl,hwndRight:Text,RText,%meterR%
 return
+
+
+WM_DISPLAYCHANGE(wParam, lParam) {
+	reload
+	exitapp
+}
 
 
 
