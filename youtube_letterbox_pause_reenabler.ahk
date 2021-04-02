@@ -1,8 +1,8 @@
 ; youtube_letterbox_pause_reenabler.ahk by github:hoffr / reddit:Splongus
 ; -------------------------------------
 ; Sometimes it's the little things in life... that piss me off!
-; YouTube (EDIT: It's a Firefox bug!) recently removed the ability to pause a video by clicking the black letterboxed space around it.
-; I don't know javascript, so here's this atrocity of a workaround (edit: until the bug is fixed)
+; YouTube recently removed the ability to pause a video by clicking the black letterboxed space around it.
+; I don't know javascript, so here's this atrocity of a workaround.
 ; ---
 ; Limitations:
 ; THIS MUST BE RUN AS ADMIN if you want your left click to work at all while an admin window is active. For real.
@@ -14,11 +14,11 @@
 
 ; ALL OF THESE VALUES MUST BE CHANGED FOR SCRIPT TO WORK; USE WINDOW SPY TO GET PROPER VALUES:
 
-browserExe := "firefox.exe" ; should work fine with chrome (edit: firefox-only bug)
+browserExe := "firefox.exe" ; should work fine with chrome
 
 ; Define the bounding rectangle of your YouTube video when the page is scrolled all the way up.
-; REMINDER: These must be maximized-window coords. Script won't work if browser isn't maximized.
-; Don't include youtube's video player control bar (pause/play/volume/fullscreen buttons etc) in the bounds!
+; REMINDER: These must be fullscreen coords. Script won't work if browser is windowed.
+; Don't include youtube's video player control bar on the bottom!
 
 ; hoffr's default values: 2560x1440 monitor, 138% DPI scaling, 120% page zoom on youtube in firefox.
 y_min := 246    ; highest (as in visibly higher, not the number itself) y coordinate to consider clicks within
@@ -34,9 +34,20 @@ x_sb := 2546
 y_sb := 178
 
 ; scrollbar color (Win7/vista/xp might have gradients, in which case UR SCREWED)
-sb_bar_color_hover := "0xA6A6A6" ; mouse hovering over scrollbar ("0x" MUST precede the color code)
-sb_bar_color_nohover := "0xCDCDCD"	; if your "hover" color is "0xA6A6A6" then don't mess with this "nohover" one
-									; otherwise you'll have to screenshot it & put it in a paint program and get its color that way
+sb_bar_color_hover := "0x5F5F5F" ; mouse hovering over scrollbar ("0x" MUST precede the color code)
+sb_bar_color_nohover := "0x727272"	; if your "hover" color is "0x5F5F5F" then don't mess with this "nohover" one
+;--- old ones that no longer work (is it youtube changing sb color or firefox? so weird)
+; first ver:
+sb_bar_color_hover2 := "0xA6A6A6"
+sb_bar_color_nohover2 := "0xCDCDCD"
+; second ver:
+sb_bar_color_hover3 := "0x787878"
+sb_bar_color_nohover3 := "0x606060"
+
+
+
+; YES FCKING SERIEOUSLY THEY KEEP KCHANGING IT WHAT THE FUCJ ARE THEY SOING SERIOUSLY WHAT THE FUCK???
+sb_bar_color_nohover4 := "0x909090"
 
 ; ---
 
@@ -53,7 +64,7 @@ CoordMode,Pixel,Screen
 		if (WinExist(" - YouTube")
 		&& (WinExist("ahk_class MozillaWindowClass ahk_id " hwnd)	; if mouse is over browser window (firefox edition)
 		|| WinExist("ahk_class Chrome_WidgetWin_1 ahk_id " hwnd))	; chrome edition
-		&& colorsb = sb_bar_color_nohover							; if we're sure scrollbar is at very top
+		&& (colorsb = sb_bar_color_nohover1 || colorsb = sb_bar_color_nohover2 || colorsb = sb_bar_color_nohover3 || sb_bar_color_nohover4)							; if we're sure scrollbar is at very top
 		&& x_mouse <= x_max && x_mouse >= x_min						; if mouse is within our defined bounding rectangle
 		&& y_mouse <= y_max && y_mouse >= y_min
 		&& colormouse = "0x000000") {								; if mouse is likely over letterboxing
