@@ -64,7 +64,7 @@ CoordMode,Pixel,Screen
 		if (WinExist(" - YouTube")
 		&& (WinExist("ahk_class MozillaWindowClass ahk_id " hwnd)	; if mouse is over browser window (firefox edition)
 		|| WinExist("ahk_class Chrome_WidgetWin_1 ahk_id " hwnd))	; chrome edition
-		&& (colorsb = sb_bar_color_nohover1 || colorsb = sb_bar_color_nohover2 || colorsb = sb_bar_color_nohover3 || sb_bar_color_nohover4)							; if we're sure scrollbar is at very top
+		&& (colorsb = sb_bar_color_nohover1 || colorsb = sb_bar_color_nohover2 || colorsb = sb_bar_color_nohover3 || colorsb = sb_bar_color_nohover4)							; if we're sure scrollbar is at very top
 		&& x_mouse <= x_max && x_mouse >= x_min						; if mouse is within our defined bounding rectangle
 		&& y_mouse <= y_max && y_mouse >= y_min
 		&& colormouse = "0x000000") {								; if mouse is likely over letterboxing
