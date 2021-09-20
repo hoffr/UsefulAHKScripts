@@ -1,4 +1,3 @@
-; TF2 spray saver v3 by reddit:Mediocre_Education50, github:hoffr
 ; Automatically save every newly downloaded spray to an external folder before their deletion.
 ; v3 must check for new sprays every few seconds while the game is running rather than copying all on game exit.
 
