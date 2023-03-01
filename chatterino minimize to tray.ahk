@@ -1,4 +1,6 @@
-﻿#NoTrayIcon
+﻿; ahk v1.1
+ 
+ #NoTrayIcon
 #Persistent
 DetectHiddenWindows,On
 Menu,Tray,Click,1
